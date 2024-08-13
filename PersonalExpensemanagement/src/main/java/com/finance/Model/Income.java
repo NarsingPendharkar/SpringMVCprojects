@@ -3,6 +3,9 @@ package com.finance.Model;
 import java.sql.Date;
 import java.sql.Timestamp;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.data.annotation.CreatedDate;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -33,10 +36,11 @@ public class Income {
 
 	@Column(name = "description", length = 255)
 	private String description;
+	
 
 	@Column(name = "date", nullable = false)
 	private Date date;
-
+	@CreationTimestamp
 	@Column(name = "created_at", nullable = false, updatable = false)
 	private Timestamp createdAt;
 

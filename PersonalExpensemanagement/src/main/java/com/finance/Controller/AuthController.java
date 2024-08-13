@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.finance.Model.User;
+import com.finance.Service.FinanceService;
 import com.finance.Service.UserService;
 
 import jakarta.servlet.http.HttpSession;
@@ -26,6 +27,9 @@ import jakarta.servlet.http.HttpSession;
 public class AuthController {
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private FinanceService financeService;
 
 	@GetMapping("/login")
 	public String loginUser(HttpSession session) {
@@ -37,21 +41,28 @@ public class AuthController {
 		return "newuser";
 	}
 
+	
+	
+	public Double totalIncome(int id) {
+		return financeService.totalIncome(id); 
+	}
 	@GetMapping("/")
 	public String homePage(HttpSession session) {
 		if (session != null) {
 			session.invalidate();
 		}
-		return "dashboard";
+		return "Home";
 	}
-
+	
 	@PostMapping("/validate")
-	public String validateUser(@Validated @RequestParam("username") String username,
+	public String validateUser( @RequestParam("username") String username,
 			@RequestParam("password") String password, HttpSession session, Model model) {
-		Optional<User> user = userService.validate(username, password);
-		if (user.isPresent() && user.get().getUsername().equals(username)
-				&& user.get().getPassword().equals(password)) {
-			session.setAttribute("user", username);
+		User user = userService.validate(username, password).get();
+		if (user!=null && user.getUsername().equals(username)
+				&& user.getPassword().equals(password)) {
+			session.setAttribute("user", user);
+			Double totalIncome= totalIncome(user.getId());
+			session.setAttribute("income", totalIncome);
 			return "dashboard";
 		} else {
 			session.invalidate();
@@ -76,4 +87,9 @@ public class AuthController {
 			return new ResponseEntity<>("An error occurred: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
+	
+	
+	
+	
+	
 }
