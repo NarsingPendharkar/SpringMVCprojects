@@ -7,10 +7,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class FinanceController {
 	
-	@GetMapping("/")
-	public String homePage() {
-		System.out.println("called");
-		return "index";
-	}
+	
 
 }
