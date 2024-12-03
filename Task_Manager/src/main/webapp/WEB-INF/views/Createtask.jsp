@@ -16,7 +16,7 @@
       <h2>Task Manager</h2>
       <ul class="nav flex-column">
         <li class="nav-item"><a href="dashboard" class="nav-link text-light">Dashboard</a></li>
-        <li class="nav-item"><a href="tasks" class="nav-link text-light">Tasks</a></li>
+        <li class="nav-item"><a href="tasks-list" class="nav-link text-light">Tasks</a></li>
         <li class="nav-item"><a href="createtask" class="nav-link text-light">Create Task</a></li>
         
         <!-- If user is logged in -->
@@ -35,17 +35,18 @@
     <!-- Main Content -->
     <div class="container-fluid p-4">
       <h1>Create/Update Task</h1>
-      <form style="font-family:Tahoma;">
+      <form style="font-family:Tahoma;" action="saveTask" method="post">
         <div class="row">
           <!-- First Column: Title and Description -->
           <div class="col-md-6 mb-3">
             <label for="title" class="form-label">Title</label>
-            <input type="text" id="title" class="form-control" placeholder="Enter task title">
+            <input type="text" id="title" name="title" class="form-control" placeholder="Enter task title">
+             <input type="hidden" id="task_id" name="task_id" class="form-control" placeholder="Enter task_id">
           </div>
 
           <div class="col-md-6 mb-3">
             <label for="description" class="form-label">Description</label>
-            <textarea id="description" class="form-control" rows="3" placeholder="Enter task description"></textarea>
+            <textarea id="description" name="description" class="form-control" rows="3" placeholder="Enter task description"></textarea>
           </div>
         </div>
 
@@ -53,15 +54,15 @@
           <!-- Second Column: Deadline and Priority -->
           <div class="col-md-6 mb-3">
             <label for="deadline" class="form-label">Deadline</label>
-            <input type="date" id="deadline" class="form-control">
+            <input type="date" id="deadline" name="deadline" class="form-control">
           </div>
 
           <div class="col-md-6 mb-3">
             <label for="priority" class="form-label">Priority</label>
-            <select id="priority" class="form-select">
-              <option value="low">Low</option>
-              <option value="medium">Medium</option>
-              <option value="high">High</option>
+            <select id="priority" name="priority" class="form-select">
+              <option value="LOW">Low</option>
+              <option value="MEDIUM">Medium</option>
+              <option value="HIGH">High</option>
             </select>
           </div>
         </div>
@@ -70,18 +71,19 @@
           <!-- Third Column: Status and Assignee -->
           <div class="col-md-6 mb-3">
             <label for="status" class="form-label">Status</label>
-            <select id="status" class="form-select">
-              <option value="todo">To Do</option>
-              <option value="inprogress">In Progress</option>
-              <option value="completed">Completed</option>
+            <select id="status" name="status" class="form-select">
+              <option value="TODO">To Do</option>
+              <option value="IN_PROGRESS">In Progress</option>
+              <option value="COMPLETED">Completed</option>
             </select>
           </div>
 
           <div class="col-md-6 mb-3">
             <label for="assignee" class="form-label">Assign To</label>
-            <select id="assignee" class="form-select">
-              <option>John Doe</option>
-              <option>Jane Smith</option>
+            <select id="assignee" name="assignee" class="form-select">
+              <c:forEach var="user" items="${users}">
+            <option value="${user.id}" >${user.username}</option>
+        </c:forEach>
             </select>
           </div>
         </div>

@@ -1,5 +1,5 @@
 package com.task.exceptions;
 
-public class TaskExceptions {
+public class TaskExceptions  {
 
 }

@@ -17,17 +17,17 @@
   <h2>Task Manager</h2>
   <ul class="nav flex-column">
     <li class="nav-item"><a href="dashboard" class="nav-link text-light">Dashboard</a></li>
-    <li class="nav-item"><a href="tasks" class="nav-link text-light">Tasks</a></li>
+    <li class="nav-item"><a href="tasks-list" class="nav-link text-light">Tasks</a></li>
     <li class="nav-item"><a href="createtask" class="nav-link text-light">Create Task</a></li>
     
     <!-- If user is logged in -->
-    <c:if test="${not empty sessionScope.loggedUser}">
-      <li class="nav-item"><span class="nav-link text-light">Welcome, ${sessionScope.loggedUser}</span></li>
+    <c:if test="${not empty loggedUser}">
+      <li class="nav-item"><span class="nav-link text-light">Welcome, ${loggedUser}</span></li>
       <li class="nav-item"><a href="logout" class="nav-link text-light">Logout</a></li>
     </c:if>
     
     <!-- If user is not logged in -->
-    <c:if test="${empty sessionScope.loggedUser}">
+    <c:if test="${empty loggedUser}">
       <li class="nav-item"><a href="loginPage" class="nav-link text-light">Login</a></li>
     </c:if>
   </ul>

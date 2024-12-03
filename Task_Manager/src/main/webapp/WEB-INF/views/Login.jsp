@@ -11,15 +11,21 @@
 <body style="font-family:fantasy;">
   <div class="container d-flex align-items-center justify-content-center vh-100">
     <div class="card p-4" style="width: 400px;">
-      <h3 class="text-center">Login</h3>
-      <form action="auth?action=login" method="post">
+    <c:if test="${not empty message}">
+    <div id="msg" class="alert alert-danger">
+        <p>${message}</p>
+    </div>
+</c:if>
+    
+      <h3 class="text-center">Login </h3>
+      <form action="authenticateUser" method="post">
         <div class="mb-3">
           <label for="username" class="form-label">User Name</label>
-          <input type="input" id="username" class="form-control" placeholder="Enter your username">
+          <input type="input" id="username" name="username" class="form-control" placeholder="Enter your username">
         </div>
         <div class="mb-3">
           <label for="password" class="form-label">Password</label>
-          <input type="password" id="password" class="form-control" placeholder="Enter your password">
+          <input type="password" id="password" name="password" class="form-control" placeholder="Enter your password">
         </div>
         <button type="submit" class="btn btn-primary w-100">Login</button>
       </form>
@@ -42,4 +48,8 @@
     </div>
   </footer>
 </body>
-</html>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="<c:url value="/js/script.js"/>"></script>
+<%-- <link href="<c:url value="/css/common.css" />" rel="stylesheet"></link>
+ --%>
+ </html>
