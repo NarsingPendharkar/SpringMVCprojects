@@ -1,5 +1,6 @@
 package com.task.controller;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +8,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,7 +20,6 @@ import com.task.model.User;
 import com.task.service.UserService;
 
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 @Controller
@@ -28,14 +29,7 @@ public class MainController {
 	@Autowired
 	private UserService userService;
 
-	@GetMapping(value = { "/", "/dashboard" })
-	public String LandingPage(HttpServletResponse response) {
-		response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
-		response.setHeader("Pragma", "no-cache");
-		response.setDateHeader("Expires", 0);
-		return "Dashboard";
-	}
-
+	
 	@PostMapping("saveUser")
 	public String saveUser(@ModelAttribute User user, BindingResult result, Model model) throws InvalidUserException {
 		if (result.hasErrors()) {
@@ -49,19 +43,23 @@ public class MainController {
 
 	@PostMapping("authenticateUser")
 	public String authenticateUser(@RequestParam("username") String username, @RequestParam("password") String password,
-			HttpSession session, Model model) throws InvalidUserException {
+	        HttpSession session, Model model) throws InvalidUserException {
 
-		User user = userService.findByUsernameAndPassword(username, password);
-		if (username.equals(user.getUsername()) && password.equals(user.getPassword())) {
-			session.setAttribute("loggedUser", username);
-			return "Dashboard";
-		}else {
-			model.addAttribute("message", "Invalid credentials");
-			return "Login";
-		} 
+	    User user = userService.findByUsernameAndPassword(username, password);
+
+	    if (user != null && username.equals(user.getUsername()) && password.equals(user.getPassword())) {
+	        session.setAttribute("loggedUser", username);
+	        return "Dashboard";
+	    } else {
+	        throw new InvalidUserException("Invalid credentials");
+	    }
+	}
+
+	
+
 		
 
-	}
+	
 
 	@GetMapping("/tasks")
 	public String tasksPage() {
@@ -69,7 +67,7 @@ public class MainController {
 	}
 
 	@GetMapping("/createtask")
-	public String tcreatetaskPage(Model model) {
+	public String tcreatetaskPage(Model model) throws SQLException {
 		List<User> users = userService.allUsers();
 		model.addAttribute("users", users);
 		return "Createtask";

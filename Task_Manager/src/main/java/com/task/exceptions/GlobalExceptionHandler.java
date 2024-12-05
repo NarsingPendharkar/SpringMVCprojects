@@ -1,15 +1,19 @@
 package com.task.exceptions;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
-import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
 	
-	public ResponseEntity<?>InvalidUserDeatilsHandle(InvalidUserException excep){
-		return new ResponseEntity<>(excep.getMessage(),HttpStatus.NOT_ACCEPTABLE);
-	}
+
+	
+	// Exception handler method to catch InvalidUserException
+		@ExceptionHandler(InvalidUserException.class)
+		public String handleInvalidUserException(InvalidUserException ex, Model model) {
+		    model.addAttribute("message", ex.getMessage());
+		    return "Login";
+		}
 
 }

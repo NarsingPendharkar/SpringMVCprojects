@@ -8,7 +8,7 @@
   <title>Tasks - Task Manager</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
 </head>
-<body style="font-family:fantasy;">
+<body style="font-family:tahoma;">
   <div class="d-flex">
     <!-- Sidebar -->
     <nav class="bg-dark text-light p-3" style="min-width: 250px;">
@@ -34,6 +34,11 @@
     <!-- Main Content -->
     <div class="container-fluid p-4">
       <h1>Tasks</h1>
+      <c:if test="${not empty message}">
+    <div id="msg" class="alert alert-danger">
+        <p>${message}</p>
+    </div>
+</c:if>
       <table class="table table-striped">
         <thead>
           <tr>
@@ -48,13 +53,18 @@
           <!-- Iterating over tasks -->
           <c:forEach var="task" items="${tasks}">
             <tr>
-              <td>${task.title}</td> <!-- Task Title -->
-              <td>${task.assignedUser.username}</td> <!-- Assigned User, assuming User object has 'username' -->
-              <td>${task.status}</td> <!-- Task Status -->
-              <td>${task.deadline}</td> <!-- Task Deadline -->
+              <td>${task.title}</td> 
+              <td>${task.assignedUser.username}</td> 
+              <td>${task.status}</td> 
+              <td>${task.deadline}</td>
               <td>
-                <button class="btn btn-warning btn-sm">Edit</button>
-                <button class="btn btn-danger btn-sm">Delete</button>
+              <c:url value="editTask/${task.task_id}" var="editUrl"/>
+<a href="${editUrl}">
+    <button class="btn btn-warning btn-sm">Edit</button>
+</a>
+<c:url value="deleteTask/${task.task_id}" var="deleteUrl"/>
+              <a href="${deleteUrl }"> <button class="btn btn-danger btn-sm">Delete</button></a>
+               
               </td>
             </tr>
           </c:forEach>
@@ -79,4 +89,5 @@
     </div>
   </footer>
 </body>
+<script src="<c:url value="/js/script.js"/>"></script>
 </html>

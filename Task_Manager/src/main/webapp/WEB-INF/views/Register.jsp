@@ -10,10 +10,16 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
 </head>
 
-<body style="font-family: fantasy;">
+<body style="font-family: tahoma;">
     <div class="container d-flex align-items-center justify-content-center vh-100">
         <div class="card p-4" style="width: 400px;">
             <h3 class="text-center">Register</h3>
+           <c:if test="${not empty message}">
+    <div id="msg" class="alert alert-danger">
+        <p>${message}</p>
+    </div>
+</c:if>
+            
             <form action="saveUser" method="post">
                 <!-- Hidden User ID field -->
                 <input type="hidden" id="user_id" name="user_id" class="form-control">
@@ -73,5 +79,5 @@
     </footer>
 
 </body>
-
+<script src="<c:url value="/js/script.js"/>"></script>
 </html>

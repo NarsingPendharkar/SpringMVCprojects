@@ -10,7 +10,7 @@
   <!-- Bootstrap Icons -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
 </head>
-<body style="font-family:fantasy;">
+<body style="font-family:tahoma;">
   <div class="d-flex">
     <!-- Sidebar -->
    <nav class="bg-dark text-light p-3" style="min-width: 250px;">
@@ -38,12 +38,17 @@
     <!-- Main Content -->
     <div class="container-fluid p-4">
       <h1>Dashboard</h1>
+      <c:if test="${not empty message}">
+    <div id="msg" class="alert alert-danger">
+        <p>${message}</p>
+    </div>
+</c:if>
       <div class="row">
         <div class="col-md-3 mb-3">
           <div class="card">
             <div class="card-body">
               <h5 class="card-title">Total Tasks</h5>
-              <p class="card-text">50</p>
+              <p class="card-text">${countotask }</p>
             </div>
           </div>
         </div>
@@ -51,7 +56,7 @@
           <div class="card">
             <div class="card-body">
               <h5 class="card-title">Completed Tasks</h5>
-              <p class="card-text">30</p>
+              <p class="card-text">${completedTasks }</p>
             </div>
           </div>
         </div>
@@ -59,7 +64,7 @@
           <div class="card">
             <div class="card-body">
               <h5 class="card-title">Overdue Tasks</h5>
-              <p class="card-text">5</p>
+              <p class="card-text">${overdueTasks }</p>
             </div>
           </div>
         </div>
@@ -88,7 +93,7 @@
     </div>
   </footer>
 
-  <!-- Chart.js -->
+  Chart.js
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script>
     const ctx = document.getElementById('taskChart').getContext('2d');
@@ -103,5 +108,7 @@
       }
     });
   </script>
+  
+  
 </body>
 </html>

@@ -25,7 +25,7 @@ public class UserService {
 		}
 	}
 
-	public User findByUsernameAndPassword(String username, String password) {
+	public User findByUsernameAndPassword(String username, String password)  {
 		User user = userRepo.findByUsernameAndPassword(username, password);
 		return user;
 	}
@@ -37,6 +37,11 @@ public class UserService {
 
 	public User userbyid(int long1) {
 		return userRepo.findById(long1).get();
+	}
+
+	public List<User> getAllUsers() {
+		
+		return userRepo.findAll();
 	}
 
 }
