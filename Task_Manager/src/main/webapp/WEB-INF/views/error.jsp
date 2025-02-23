@@ -12,7 +12,7 @@
     <style>
         body {
             background-color: #f4f4f9;
-            font-family: Arial, sans-serif;
+            font-family: 'Poppins', sans-serif;
         }
 
         .error-container {
