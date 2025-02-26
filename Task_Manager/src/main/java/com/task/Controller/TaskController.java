@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.task.Model.Tasks;
 import com.task.Model.User;
@@ -95,6 +96,7 @@ public class TaskController {
             @RequestParam(name = "size", defaultValue = "6") int size,
             Model model) {
 	    Page<Tasks> tasksPage = taskserviceImpl.alltasks(PageRequest.of(page, size));
+	   
 	    model.addAttribute("tasks", tasksPage.getContent());
 	    model.addAttribute("currentPage", page);
 	    model.addAttribute("totalPages", tasksPage.getTotalPages());
@@ -145,4 +147,7 @@ public class TaskController {
 		model.addAttribute("users", users);
 		return "Createtask";
 	}
+	
+    
+
 }

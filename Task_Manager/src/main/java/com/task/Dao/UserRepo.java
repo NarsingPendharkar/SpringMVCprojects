@@ -1,6 +1,5 @@
 package com.task.Dao;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -16,6 +15,6 @@ public interface UserRepo extends JpaRepository<User,Integer> {
 	
 	@Query(value = "SELECT count(username) FROM users where username=?1" , nativeQuery = true)
 	public Integer existByUsername(String user);
-	
+	Optional<User> findByUsername(String username);
 
 }

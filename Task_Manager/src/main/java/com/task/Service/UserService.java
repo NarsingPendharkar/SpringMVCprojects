@@ -45,16 +45,8 @@ public class UserService {
 	}
 	
 	// find user by username
-	public boolean userByname(String username){
-		System.out.println(username);
-		Integer num=userRepo.existByUsername(username);
-		System.out.println(num);
-		if(num>0) {
-			return true;
-		}else {
-			return false;	
-		}
-			
+	public Optional<User>  userByname(String username){
+		return userRepo.findByUsername(username);
 	}
 
 }

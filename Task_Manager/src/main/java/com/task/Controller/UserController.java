@@ -1,11 +1,13 @@
 package com.task.Controller;
 
 import java.sql.SQLException;
+import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -27,7 +29,7 @@ import jakarta.servlet.http.HttpSession;
 @Controller
 @SessionAttributes("loggedUser")
 public class UserController {
-
+ private static final BCryptPasswordEncoder passEncoder=new BCryptPasswordEncoder();
 	private static final Logger logger = LoggerFactory.getLogger("UserController.java");
 	@Autowired
 	private UserService userService;
@@ -40,6 +42,8 @@ public class UserController {
 			return "Register";
 		}
 		try {
+			String codePass=passEncoder.encode(user.getPassword());
+			user.setPassword(codePass);
 			userService.saveUser(user);
 			model.addAttribute("message", "User Registration successful");
 			return "redirect:/loginPage";
@@ -55,8 +59,9 @@ public class UserController {
 	public String authenticateUser(@RequestParam("username") String username, @RequestParam("password") String password,
 			HttpSession session, RedirectAttributes redirectAttributes) {
 		try {
-			User user = userService.findByUsernameAndPassword(username, password);
-			if (user != null && username.equals(user.getUsername()) && password.equals(user.getPassword())) {
+			User user = userService.userByname(username).get();
+			System.out.println(user.toString());
+			if (user != null && username.equals(user.getUsername()) && passEncoder.matches(password,  user.getPassword())) {
 				session.setAttribute("loggedUser", user);
 				return "Dashboard";
 			}
@@ -69,8 +74,8 @@ public class UserController {
 
 	@GetMapping("/checkUsername")
 	public ResponseEntity<String> checkUsername(@RequestParam("username") String username) {
-		boolean exists = userService.userByname(username);
-		if (exists) {
+		User exists = userService.userByname(username).get();
+		if (exists!=null) {
 			return ResponseEntity.ok("exists"); // Returning a text response
 		} else {
 			return ResponseEntity.ok("not-exists");

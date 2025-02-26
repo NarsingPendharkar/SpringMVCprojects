@@ -13,14 +13,21 @@
         <!-- Automatically detect JPA entities -->
         <properties>
             <!-- JDBC connection -->
-             <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/db_taskmanager?useSSL=false"/>
+      <!--        <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/db_taskmanager?useSSL=false"/>
             <property name="javax.persistence.jdbc.user" value="root"/>
             <property name="javax.persistence.jdbc.password" value="root"/>
             <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
-            
-
+            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL8Dialect" /> -->
+            <!-- mssql connection -->
+              <property name="javax.persistence.jdbc.url" value="jdbc:sqlserver://DESKTOP-G774017:1433;databaseName=db_taskmanager;encrypt=false"/>
+            <property name="javax.persistence.jdbc.user" value="Narsing"/>
+            <property name="javax.persistence.jdbc.password" value="root"/>
+            <property name="javax.persistence.jdbc.driver" value="com.microsoft.sqlserver.jdbc.SQLServerDriver"/>
+			<property name="hibernate.dialect" value="org.hibernate.dialect.SQLServerDialect"/>
             <!-- Hibernate settings -->
-            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL8Dialect" />
+            
+          <!--   mssql dilect -->
+            
             <property name="hibernate.hbm2ddl.auto" value="update" />
             <property name="hibernate.show_sql" value="true" />
             <property name="hibernate.format_sql" value="true" />
